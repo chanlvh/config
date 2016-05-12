@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "Print out each command before execute"
-set -x
+#echo "Print out each command before execute"
+#set -x
 
 echo "======> COLORED BASH"
 sed -i -e 's/#force_color_prompt=yes/force_color_prompt=yes/g' ~/.bashrc
@@ -36,7 +36,7 @@ echo "======> INSTALL DOKKU"
 wget -nv -O - https://packagecloud.io/gpg.key | apt-key add -
 echo "deb https://packagecloud.io/dokku/dokku/ubuntu/ trusty main" | sudo tee /etc/apt/sources.list.d/dokku.list
 sudo apt-get update -qq > /dev/null
-sudo apt-get --yes --force-yes install dokku
+sudo apt-get --yes --force-yes -qq install dokku
 sudo dokku plugin:install-dependencies --core
 
 echo "======> INSTALL MONGO PLUGIN"
