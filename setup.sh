@@ -8,7 +8,7 @@ sed -i -e 's/#force_color_prompt=yes/force_color_prompt=yes/g' ~/.bashrc
 source ~/.bashrc # reload bashrc
 
 echo "======> GENERATE KEY"
-ssh-keygen -t rsa -C "server@chan.io"
+ssh-keygen -q -t rsa -C "server@chan.io"
 
 echo "======> INSTALL BUILD-ESSENTIAL"
 sudo apt-get update
