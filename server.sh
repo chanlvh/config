@@ -1,5 +1,10 @@
 source common.sh
 
+if [ -z ${HOST_NAME+x} ]; then
+  error "HOST_NAME is empty"
+  exit
+fi
+
 title "COLORED BASH"
 sed -i -e 's/#force_color_prompt=yes/force_color_prompt=yes/g' ~/.bashrc
 source ~/.bashrc # reload bashrc
@@ -20,7 +25,6 @@ echo "deb https://packagecloud.io/dokku/dokku/ubuntu/ trusty main" | sudo tee /e
 sudo apt-get -qq update
 
 title "CONFIG DOKKU "
-HOST_NAME="note.cool"
 echo "dokku dokku/web_config boolean false" | sudo debconf-set-selections
 echo "dokku dokku/vhost_enable boolean true" | sudo debconf-set-selections
 echo "dokku dokku/hostname string $HOST_NAME" | sudo debconf-set-selections
