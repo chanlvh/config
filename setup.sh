@@ -49,3 +49,4 @@ ssh -T git@github.com
 echo "******> DEPLOYMENT KEY"
 cat /dev/zero | ssh-keygen -q -t rsa -C "dokku@chan.io" -N ""
 cat ~/.ssh/id_rsa.pub
+exit
