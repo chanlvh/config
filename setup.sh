@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #echo "Print out each command before execute"
-#set -x
+set -x
 
 # print out comment line with color
 p() {
@@ -12,11 +12,11 @@ p "COLORED BASH"
 sed -i -e 's/#force_color_prompt=yes/force_color_prompt=yes/g' ~/.bashrc
 source ~/.bashrc # reload bashrc
 
-p "GENERATE KEY"
-cat /dev/zero | ssh-keygen -q -t rsa -C "server@chan.io" -N ""
+p "GENERATE ROOT KEY"
+ssh-keygen -q -t rsa -C "root@chan.io" -N "" -f ~/.ssh/id_rsa
 
 p "INSTALL BUILD-ESSENTIAL, VIM AND DOKKU PREREQUISITES"
-sudo apt-get update -qq 
+sudo apt-get -qq update
 sudo apt-get --yes --force-yes -qq install build-essential vim apt-transport-https
 
 p "INSTALL DOCKER"
@@ -25,7 +25,7 @@ wget -nv -O - https://get.docker.com/ | sh
 p "ADD DOKKU REPO"
 wget -nv -O - https://packagecloud.io/gpg.key | apt-key add -
 echo "deb https://packagecloud.io/dokku/dokku/ubuntu/ trusty main" | sudo tee /etc/apt/sources.list.d/dokku.list
-sudo apt-get update -qq
+sudo apt-get -qq update
 
 p "CONFIG DOKKU "
 HOST_NAME="note.cool"
@@ -50,6 +50,6 @@ p "MAKE DOKKU RECOGNIZE GITHUB KEYS"
 # run su - dokku separately cause weird bugs when things appear after bash script end
 su - dokku -c 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
 
-p "DEPLOYMENT KEY"
-su - dokku -c 'cat /dev/zero | ssh-keygen -q -t rsa -C "dokku@chan.io" -N ""'
+p "GENERATE DOKKU KEY"
+su - dokku -c 'ssh-keygen -q -t rsa -C "dokku@chan.io" -N "" -f ~/.ssh/id_rsa'
 su - dokku -c 'cat ~/.ssh/id_rsa.pub'
