@@ -47,6 +47,5 @@ ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 ssh -T git@github.com
 
 echo "******> DEPLOYMENT KEY"
+cat /dev/zero | ssh-keygen -q -t rsa -C "dokku@chan.io" -N ""
 cat ~/.ssh/id_rsa.pub
-
-exit
