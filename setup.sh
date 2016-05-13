@@ -41,11 +41,12 @@ dokku plugin:install https://github.com/dokku/dokku-mongo.git mongo
 echo "******> ADD MY PUBLIC KEY"
 sshcommand acl-add dokku $KEY
 
-echo "******> DEPLOYMENT KEY"
-cat ~/.ssh/id_rsa.pub
-
 echo "******> MAKE DOKKU RECOGNIZE GITHUB KEYS"
 su - dokku
 ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 ssh -T git@github.com
+
+echo "******> DEPLOYMENT KEY"
+cat ~/.ssh/id_rsa.pub
+
 exit
