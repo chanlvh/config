@@ -18,6 +18,12 @@ if [[ $CURRENT_PATH == *"No such remote"* ]]; then
   git remote add dokku $REMOTE_PATH
 fi
 
+if [ "$MONGO" = true ] ; then
+  ssh -t dokku@HOST_NAME -- dokku apps:create $APP_NAME
+  ssh -t dokku@HOST_NAME -- dokku mongo:create $APP_NAME
+  ssh -t dokku@HOST_NAME -- dokku mongo:link $APP_NAME $APP_NAME
+fi
+
 if [ "$CURRENT_PATH" == "$REMOTE_PATH" ]; then
   info "Deploy app $APP_NAME to server $HOST_NAME"
   git push dokku master
