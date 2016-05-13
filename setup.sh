@@ -42,11 +42,8 @@ echo "******> ADD MY PUBLIC KEY"
 sshcommand acl-add dokku $KEY
 
 echo "******> MAKE DOKKU RECOGNIZE GITHUB KEYS"
-su - dokku
-ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-ssh -T git@github.com
+su - dokku -c 'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts'
 
 echo "******> DEPLOYMENT KEY"
-cat /dev/zero | ssh-keygen -q -t rsa -C "dokku@chan.io" -N ""
-cat ~/.ssh/id_rsa.pub
-exit
+su - dokku -c 'cat /dev/zero | ssh-keygen -q -t rsa -C "dokku@chan.io" -N ""'
+su - dokku -c 'cat ~/.ssh/id_rsa.pub'
