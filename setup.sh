@@ -1,12 +1,14 @@
 #!/bin/bash
 
-#echo "Print out each command before execute"
-set -x
-
 # print out comment line with color
 p() {
-  echo "$(tput setaf 2)******> $1$(tput sgr0)"
+  echo "$(tput setaf 2)******> ${1^^}$(tput sgr0)"
 }
+
+if [ "$DEBUG" = true ] ; then
+  p "Print out each command before execute"
+  set -x
+fi
 
 p "COLORED BASH"
 sed -i -e 's/#force_color_prompt=yes/force_color_prompt=yes/g' ~/.bashrc
@@ -29,7 +31,7 @@ sudo apt-get -qq update
 
 p "CONFIG DOKKU "
 HOST_NAME="note.cool"
-KEY=$(curl -sS https://raw.githubusercontent.com/chanlvh/config/master/id_rsa.pub)
+KEY=$()
 echo "dokku dokku/web_config boolean false" | sudo debconf-set-selections
 echo "dokku dokku/vhost_enable boolean true" | sudo debconf-set-selections
 echo "dokku dokku/hostname string $HOST_NAME" | sudo debconf-set-selections
@@ -44,7 +46,7 @@ p "INSTALL MONGO PLUGIN"
 dokku plugin:install https://github.com/dokku/dokku-mongo.git mongo
 
 p "ADD MY PUBLIC KEY"
-sshcommand acl-add dokku "$KEY"
+curl -sS https://raw.githubusercontent.com/chanlvh/config/master/id_rsa.pub | sshcommand acl-add dokku chanlvh
 
 p "MAKE DOKKU RECOGNIZE GITHUB KEYS"
 # run su - dokku separately cause weird bugs when things appear after bash script end
