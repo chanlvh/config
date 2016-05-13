@@ -11,6 +11,7 @@ alias p='git push'
 alias a='git add --all .'
 alias s='git status'
 alias b='git checkout'
+# remove last known host - useful when rebuild the same virtual server again and again
 alias rlkh="sed -i '' -e '$ d' ~/.ssh/known_hosts"
 
 export WORKON_HOME=$HOME/.virtualenvs
