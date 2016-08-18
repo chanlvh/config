@@ -1,0 +1,28 @@
+# This is Git's per-user configuration file.
+[user]
+	name = Chan Le
+	email = chanle@anduintransact.com
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[merge]
+	tool = vimdiff
+[mergetool]
+	keepBackup = false
+[core]
+	excludesfile = /Users/chanlvh/.gitignore_global
+	editor = /usr/bin/vim
+	pager = cat
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/chanlvh/.stCommitMsg
+[alias]
+  lg = log --graph --topo-order --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --branches --tags --remotes=master HEAD^^..
+[push]
+	default = current
